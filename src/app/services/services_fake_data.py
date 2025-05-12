@@ -19,5 +19,14 @@ class service_fake_data:
             random_email = faker.email()
             return random_email
         except Exception:
-            details_exception = "Error getting name."
+            details_exception = "Error getting e-mail."
+            raise HTTPException(HTTP_503_SERVICE_UNAVAILABLE, detail=details_exception)
+
+    @staticmethod
+    def get_random_address():
+        try:
+            random_address = faker.address()
+            return random_address
+        except Exception:
+            details_exception = "Error getting address."
             raise HTTPException(HTTP_503_SERVICE_UNAVAILABLE, detail=details_exception)
