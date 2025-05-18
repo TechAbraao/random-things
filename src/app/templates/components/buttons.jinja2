@@ -1,0 +1,10 @@
+{% macro basic_button(label="Click Here!", class="", type="button", id="", disabled=False) %}
+<button
+    type="{{ type }}"
+    class="{{ class }}"
+    id="{{ id }}"
+    {% if disabled %}disabled{% endif %}
+>
+    {{ label }}
+</button>
+{% endmacro %}

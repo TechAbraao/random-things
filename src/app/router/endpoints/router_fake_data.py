@@ -1,33 +1,23 @@
 from fastapi import APIRouter
-from fastapi.responses import JSONResponse
-from starlette.status import HTTP_503_SERVICE_UNAVAILABLE
-from src.app.services.services_fake_data import service_fake_data
 from pydantic import BaseModel
+from src.app.services.service_fake_data import service_fake_data
 
 class MessageResponse(BaseModel):
     message: str
 
 fake = APIRouter()
 
-@fake.get("/random/name", response_model=MessageResponse)
-async def get_random_name() -> MessageResponse:
-    try:
-        random_name = service_fake_data.get_random_name()
-        return MessageResponse(message=random_name)
-    except Exception:
-        return JSONResponse(
-            status_code=HTTP_503_SERVICE_UNAVAILABLE,
-            content={"detail": "Serviço indisponível"}
-        )
+@fake.get("/api/name", response_model=MessageResponse)
+async def get_random_name():
+    name: str = service_fake_data.get_random_name()
+    return {"message": name}
 
-@fake.get("/random/email", response_model=MessageResponse)
-async def get_random_email() -> MessageResponse:
-    try:
-        random_name = service_fake_data.get_random_email()
-        return MessageResponse(message=random_name)
-    except Exception:
-        return JSONResponse(
-            status_code=HTTP_503_SERVICE_UNAVAILABLE,
-            content={"detail": "Serviço indisponível"}
-        )
+@fake.get("/api/email", response_model=MessageResponse)
+async def get_random_email():
+    email: str = service_fake_data.get_random_email()
+    return {"message": email}
 
+@fake.get("/api/address", response_model=MessageResponse)
+async def get_random_address():
+    address: str = service_fake_data.get_random_address()
+    return {"message": address}

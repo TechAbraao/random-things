@@ -1,7 +1,71 @@
 {% extends "base.jinja2" %}
 
+{% block title %} Choice | Faker Data {% endblock title %}
+
 {% block content %}
-<div>
-    <h1>Hello, World!</h1>
-</div>
+    <div class="layout_root">
+        <section>
+            {{ cards.basic_card() }}
+        </section>
+        <section>
+            {% for item in data %}
+                {% if item == "Random Name" %}
+                    {{ buttons.basic_button(label=item, class="btn_random_name") }}
+                {% elif item == "Random E-mail" %}
+                    {{ buttons.basic_button(label=item, class="btn_random_email") }}
+                {% elif item == "Random Address" %}
+                    {{ buttons.basic_button(label=item, class="btn_random_address") }}
+                {% else %}
+                    {{ buttons.basic_button(label=item, class="btn_default") }}
+                {% endif %}
+            {% endfor %}
+        </section>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("button.btn_random_name, button.btn_random_email, button.btn_random_address").click(function () {
+                if ($(this).hasClass("btn_random_name")) {
+                    $.ajax({
+                        url: "/api/name",
+                        type: "GET",
+                        dataType: "json",
+                        success: function (res) {
+                            const name = res.message
+                            alert(name)
+                        },
+                        error: function () {
+                            alert("Error")
+                        }
+                    })
+                } else if ($(this).hasClass("btn_random_email")) {
+                    $.ajax({
+                        url: "/api/email",
+                        type: "GET",
+                        dataType: "json",
+                        success: function (res) {
+                            const name = res.message
+                            alert(name)
+                        },
+                        error: function () {
+                            alert("Error")
+                        }
+                    })
+                } else if ($(this).hasClass("btn_random_address")) {
+                    $.ajax({
+                        url: "/api/address",
+                        type: "GET",
+                        dataType: "json",
+                        success: function (res) {
+                            const name = res.message
+                            alert(name)
+                        },
+                        error: function () {
+                            alert("Error")
+                        }
+                    })
+                }
+            });
+        })
+    </script>
 {% endblock content %}

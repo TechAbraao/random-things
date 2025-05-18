@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock title %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/root.css') }}">
 </head>
 <body>
+    {% import "components/buttons.jinja2" as buttons %}
+    {% import "components/inputs.jinja2" as inputs %}
+    {% import "components/cards.jinja2" as cards %}
     <section>
         {% block content %} {% endblock content %}
     </section>
