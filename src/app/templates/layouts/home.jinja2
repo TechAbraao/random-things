@@ -1,0 +1,67 @@
+{% extends "base.jinja2" %}
+
+{% block title %} Choice | Faker Data {% endblock title %}
+
+{% block content %}
+    <div class="w-full h-screen flex items-center justify-center flex-col gap-10">
+        <section class="flex justify-center w-1/2 gap-10">
+            {{ cards.basic_card() }}
+            {{ cards.basic_card() }}
+        </section>
+        <section class="flex gap-8">
+            {% for item in data %}
+                {% if item == "Random Name" %}
+                    {{ buttons.basic_button(label=item, class="btn_random_name", tag_i="fi fi-rr-cursor-finger") }}
+                {% elif item == "Random E-mail" %}
+                    {{ buttons.basic_button(label=item, class="btn_random_email") }}
+                {% elif item == "Random Address" %}
+                    {{ buttons.basic_button(label=item, class="btn_random_address") }}
+                {% else %}
+                    {{ buttons.basic_button(label=item, class="btn_default") }}
+                {% endif %}
+            {% endfor %}
+        </section>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("button.btn_random_name, button.btn_random_email, button.btn_random_address").click(function () {
+
+            const $btn = $(this);
+            const $icon = $btn.find("i");
+            const originalClasses = $icon.attr("class");
+
+            $icon.removeClass().addClass("fi fi-rr-loading animate-spin-loading");
+
+            let url = "";
+            if ($btn.hasClass("btn_random_name")) url = "/api/name";
+            else if ($btn.hasClass("btn_random_email")) url = "/api/email";
+            else if ($btn.hasClass("btn_random_address")) url = "/api/address";
+
+            if (!url) {
+                alert("URL não definida.");
+                return;
+            }
+
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json",
+                success: function (res) {
+                    const message = res.message || "Sem mensagem";
+                    $("#basic_card_label_field").text(message);
+                },
+                error: function () {
+                    alert("Erro na requisição.");
+                },
+                complete: function () {
+                    $icon.removeClass().addClass("fi fi-rr-check pt-1");
+                    setTimeout(() => {
+                        $icon.removeClass().addClass(originalClasses);
+                    }, 2000);
+                }
+            });
+        });
+    });
+</script>
+{% endblock content %}

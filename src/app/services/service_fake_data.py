@@ -25,8 +25,29 @@ class service_fake_data:
     @staticmethod
     def get_random_address():
         try:
-            random_address = faker.address()
-            return random_address
+            raw_address = faker.address()
+            lines = raw_address.split('\n')
+
+            if len(lines) < 3:
+                raise ValueError("Address format is not as expected.")
+
+            street = lines[0].strip()
+            neighborhood = lines[1].strip()
+            zip_city_state = lines[2].strip()
+
+            zip_code, rest = zip_city_state.split(' ', 1)
+            city, state = rest.rsplit('/', 1)
+
+            return {
+                "street": street,
+                "neighborhood": neighborhood,
+                "zip_code": zip_code,
+                "city": city.strip(),
+                "state": state.strip()
+            }
+
         except Exception:
-            details_exception = "Error getting address."
-            raise HTTPException(HTTP_503_SERVICE_UNAVAILABLE, detail=details_exception)
+            raise HTTPException(
+                HTTP_503_SERVICE_UNAVAILABLE,
+                detail="Error generating random address."
+            )

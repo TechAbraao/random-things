@@ -1,9 +1,15 @@
 {% macro basic_card(label=None) %}
+    <div>
+        <p id="basic_card_label_field">
+            {{ label if label else "Nenhum dado encontrado." }}
+        </p>
+    </div>
+{% endmacro %}
+
+{% macro address_card(label=None) %}
 <div>
-    {% if label %}
-        <p>{{ label }}</p>
-    {% else %}
-        <p>Nenhum dado encontrado.</p>
-    {% endif %}
+    <p id="address_card_label_field">
+        {{ label if label else "Nenhum dado encontrado." }}
+    </p>
 </div>
 {% endmacro %}

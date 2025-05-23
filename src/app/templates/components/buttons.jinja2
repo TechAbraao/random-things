@@ -1,10 +1,13 @@
-{% macro basic_button(label="Click Here!", class="", type="button", id="", disabled=False) %}
+{% macro basic_button(label="Click Here!", class="", type="button", id="", tag_i = "", disabled=False) %}
 <button
     type="{{ type }}"
-    class="{{ class }}"
+    class="{{ class }} text-lg w-48 h-12 bg-green-400 rounded-md text-white border-solid border-green-600 border-2 flex items-center justify-center gap-2"
     id="{{ id }}"
     {% if disabled %}disabled{% endif %}
 >
-    {{ label }}
+    {% if tag_i %}
+        <i class="{{ tag_i }} pt-1"></i>
+    {% endif %}
+    <span>{{ label }}</span>
 </button>
 {% endmacro %}
