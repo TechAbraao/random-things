@@ -1,13 +1,23 @@
-{% macro basic_button(label="Click Here!", class="", type="button", id="", tag_i = "", disabled=False) %}
-<button
-    type="{{ type }}"
-    class="{{ class }} text-lg w-48 h-12 bg-green-400 rounded-md text-white border-solid border-green-600 border-2 flex items-center justify-center gap-2"
-    id="{{ id }}"
-    {% if disabled %}disabled{% endif %}
->
-    {% if tag_i %}
-        <i class="{{ tag_i }} pt-1"></i>
-    {% endif %}
-    <span>{{ label }}</span>
-</button>
+{% macro basic_button(label="Click Here!", class="", type="button", id="", tag_i = "", disabled=False, loading_icon=False) %}
+    <button
+            type="{{ type }}"
+            class="{{ class }} text-lg w-48 h-12 bg-green-400 rounded-md text-white border-solid border-green-600 border-2 flex items-center justify-center gap-2 relative"
+            id="{{ id }}"
+            {% if disabled %}disabled{% endif %}
+    >
+        {% if tag_i %}
+            <span class="icon-default">
+                <i class="{{ tag_i }} pt-1"></i>
+            </span>
+        {% endif %}
+
+        {% if loading_icon %}
+            <svg class="icon-loader hidden animate-spin h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg"
+                 fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-35" cx="12" cy="12" r="6" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+            </svg>
+        {% endif %}
+        <span>{{ label }}</span>
+    </button>
 {% endmacro %}

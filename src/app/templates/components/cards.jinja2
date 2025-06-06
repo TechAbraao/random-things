@@ -1,15 +1,17 @@
-{% macro basic_card(label=None) %}
+{% macro basic_card(label=None, class="") %}
     <div>
-        <p id="basic_card_label_field">
-            {{ label if label else "Nenhum dado encontrado." }}
+        <p class="{{ class }}">
+            {{ label if label else "Clique no Botão!" }}
         </p>
     </div>
 {% endmacro %}
 
-{% macro address_card(label=None) %}
-<div>
-    <p id="address_card_label_field">
-        {{ label if label else "Nenhum dado encontrado." }}
-    </p>
-</div>
+{% macro address_card(label=None, class="") %}
+    <div>
+        <p class="field_city">Clique no Botão!</p>
+        <p class="field_neighborhood"></p>
+        <p class="field_state"></p>
+        <p class="field_street"></p>
+        <p class="field_zip_code"></p>
+    </div>
 {% endmacro %}
